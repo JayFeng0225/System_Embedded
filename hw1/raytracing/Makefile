@@ -4,9 +4,9 @@ all: $(EXEC)
 
 CC ?= gcc
 CFLAGS = \
-	-std=gnu99 -Wall -O0 -g
+	-std=gnu99 -Wall -O0 -g -fopenmp
 LDFLAGS = \
-	-lm
+	-lm -lgomp
 
 ifeq ($(strip $(PROFILE)),1)
 PROF_FLAGS = -pg
@@ -42,6 +42,11 @@ check: $(EXEC)
 	@./$(EXEC) && diff -u baseline.ppm out.ppm || (echo Fail; exit)
 	@echo "Verified OK"
 
+plot : $(EXEC)
+	./raytracing 
+	 gprof -b raytracing gmon.out > prof_output
+	gprof ./raytracing | ./gprof2dot.py | dot -Tpng -o output.png
+
 clean:
 	$(RM) $(EXEC) $(OBJS) use-models.h \
-		out.ppm gmon.out
+		out.ppm gmon.out prof_output output.png
