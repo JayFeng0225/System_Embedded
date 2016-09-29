@@ -42,11 +42,14 @@ check: $(EXEC)
 	@./$(EXEC) && diff -u baseline.ppm out.ppm || (echo Fail; exit)
 	@echo "Verified OK"
 
-plot : $(EXEC)
+gprof : $(EXEC)
 	./raytracing 
 	 gprof -b raytracing gmon.out > prof_output
 	gprof ./raytracing | ./gprof2dot.py | dot -Tpng -o output.png
 
+plot: output.txt
+	gnuplot scripts/runtime.gp
+
 clean:
 	$(RM) $(EXEC) $(OBJS) use-models.h \
-		out.ppm gmon.out prof_output output.png
+		out.ppm gmon.out prof_output output.png runtime.png
