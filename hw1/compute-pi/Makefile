@@ -19,17 +19,20 @@ default: computepi.o
 	$(CC) -c $(CFLAGS) $< -o $@ 
 
 check: default
-	time ./time_test_baseline
-	time ./time_test_openmp_2
-	time ./time_test_openmp_4
-	time ./time_test_avx
-	time ./time_test_avxunroll
+	time -p ./time_test_baseline
+	time -p ./time_test_openmp_2
+	time -p ./time_test_openmp_4
+	time -p ./time_test_avx
+	time -p ./time_test_avxunroll
 
 gencsv: default
-	for i in `seq 100 5000 25000`; do \
-		printf "%d," $$i;\
+	for i in `seq 1000 5000 1000000`; do \
+		printf "%d " $$i;\
 		./benchmark_clock_gettime $$i; \
 	done > result_clock_gettime.csv	
 
+plot: result_clock_gettime.csv
+	gnuplot scripts/runtime.gp
+
 clean:
-	rm -f $(EXECUTABLE) *.o *.s result_clock_gettime.csv
+	rm -f $(EXECUTABLE) *.o *.s result_clock_gettime.csv runtime.png
