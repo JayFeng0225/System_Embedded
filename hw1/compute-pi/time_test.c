@@ -3,6 +3,7 @@
 
 int main(int argc, char const *argv[])
 {
+    //__attribute__((unused)) int N = 400000000;
     __attribute__((unused)) int N = 400000000;
     double pi = 0.0;
 
@@ -25,6 +26,15 @@ int main(int argc, char const *argv[])
 #if defined(AVXUNROLL)
     pi = compute_pi_avx_unroll(N);
 #endif
+
+#if defined(LEIBNIZ)
+	pi = compute_pi_leibniz(N);
+#endif
+
+#if defined(EULER)
+	pi = compute_pi_euler(N);
+#endif
+
     printf("N = %d , pi = %lf\n", N, pi);
 
     return 0;

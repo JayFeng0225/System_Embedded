@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 #include <immintrin.h>
 #include <omp.h>
 #include "computepi.h"
@@ -14,6 +15,26 @@ double compute_pi_baseline(size_t N)
     return pi * 4.0;
 }
 
+double compute_pi_leibniz(size_t N)
+{
+	double pi = 0.0;
+	double temp = 1;
+	for (size_t i = 0 ; i < N ; i++){
+		pi += temp / (2* (double)i + 1);  
+		temp *= (-1);
+	}
+	return pi * 4.0;
+}
+
+double compute_pi_euler(size_t N)
+{
+	double pi = 0.0;
+	for (size_t i = 1; i <= N; i++){
+		pi += 1/ ((double)i*(double)i);	
+	}
+	pi *= 6;
+	return sqrt(pi);
+}
 double compute_pi_openmp(size_t N, int threads)
 {
     double pi = 0.0;
