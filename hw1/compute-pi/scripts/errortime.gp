@@ -2,7 +2,7 @@ reset
 set logscale x 2
 set xlabel 'N'
 set ylabel 'Time (sec)'
-set title 'Error Time'
+set title 'Error Rate'
 set term png enhanced font 'Verdana,10'
 set output 'errorrate.png'
 
