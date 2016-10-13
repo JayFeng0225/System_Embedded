@@ -2,10 +2,10 @@
 #define LLIST_H_
 
 #include <stdint.h>
-
+#define MAX_LENGTH 16
 
 typedef struct node {
-    char data[16];
+    char data[MAX_LENGTH];
     struct node *next;
 } node_t;
 

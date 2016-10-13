@@ -7,6 +7,7 @@
 
 #define USAGE "usage: ./sort [thread_count] [input_count]\n"
 #define thread_count 4
+
 struct {
     pthread_mutex_t mutex;
     int cut_thread_count;
@@ -15,7 +16,7 @@ struct {
 static llist_t *tmp_list;
 static llist_t *the_list = NULL;
 
-static int thread_count = 0, data_count = 0, max_cut = 0;
+static int  data_count = 0, max_cut = 0;
 static tpool_t *pool = NULL;
 
 llist_t *merge_list(llist_t *a, llist_t *b)
